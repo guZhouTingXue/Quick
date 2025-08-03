@@ -5,13 +5,19 @@
 #include <QQmlListProperty>
 #include <qqmlintegration.h>
 
-class MessageBody : public QObject{
+
+class MessageAuthor : public QObject {
     Q_OBJECT
     QML_ELEMENT
-    Q_PROPERTY(QString text READ text CONSTANT)
+    Q_PROPERTY(QString name READ name CONSTANT)
+    Q_PROPERTY(QString email READ email CONSTANT)
 public:
-    QString text() const {
-        return "Body";
+    MessageAuthor(QObject *parent = nullptr) : QObject(parent) {}
+    QString name() const {
+        return "mingStudent";
+    }
+    QString email() const {
+        return ":)@qq.com";
     }
 };
 
@@ -20,69 +26,23 @@ class Message : public QObject
 {
     Q_OBJECT
     QML_ELEMENT
-    Q_PROPERTY(QString author READ author WRITE setAuthor NOTIFY authorChanged FINAL)
-    Q_PROPERTY(MessageBody* body READ body CONSTANT)
+    Q_PROPERTY(MessageAuthor *author READ author CONSTANT)
 public:
-    explicit Message(QObject *parent = nullptr);
-    ~Message() {
-        delete m_body;
+    explicit Message(QObject *parent = nullptr)
+        : QObject(parent)
+        , m_author(new MessageAuthor(this))
+    {
+
     }
 
-    MessageBody* body()const {
-        return m_body;
-    }
-
-    void setAuthor(const QString &a) {
-        if(a != m_author)
-        {
-            m_author = a;
-            emit authorChanged();
-        }
-    }
-
-    QString author() const {
+    MessageAuthor* author() const {
         return m_author;
     }
 
-signals:
-    void authorChanged();
 private:
-    QString m_author = "mingStudent";
-    MessageBody *m_body = nullptr;
+    MessageAuthor *m_author = nullptr;
 };
 
-class MessageBoard : public QObject{
-    Q_OBJECT
-    QML_ELEMENT
-    Q_PROPERTY(QQmlListProperty<Message> messages READ messages)
-public:
-    MessageBoard(QObject *parent = nullptr)
-        : QObject(parent)
-    {
-        auto msg = new Message(this);
-        msg->setAuthor("Rod");
-        m_messages.append(msg);
-
-        msg = new Message(this);
-        msg->setAuthor("Ade");
-        m_messages.append(msg);
-    }
-    QQmlListProperty<Message> messages() {
-        return QQmlListProperty<Message>(this, &m_messages);
-    }
-private:
-
-#if 0
-    static void append_message(QQmlListProperty<Message> *list, Message *msg) {
-        MessageBoard *msgBoard = qobject_cast<MessageBoard*>(list->object);
-        if(msg && msgBoard)
-            msgBoard->m_messages.append(msg);
-    }
-#endif
-
-private:
-    QList<Message *> m_messages;
-};
 
 
 #endif // MESSAGE_H
