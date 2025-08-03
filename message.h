@@ -2,6 +2,7 @@
 #define MESSAGE_H
 
 #include <QObject>
+#include <QQmlListProperty>
 #include <qqmlintegration.h>
 
 class MessageBody : public QObject{
@@ -49,5 +50,39 @@ private:
     QString m_author = "mingStudent";
     MessageBody *m_body = nullptr;
 };
+
+class MessageBoard : public QObject{
+    Q_OBJECT
+    QML_ELEMENT
+    Q_PROPERTY(QQmlListProperty<Message> messages READ messages)
+public:
+    MessageBoard(QObject *parent = nullptr)
+        : QObject(parent)
+    {
+        auto msg = new Message(this);
+        msg->setAuthor("Rod");
+        m_messages.append(msg);
+
+        msg = new Message(this);
+        msg->setAuthor("Ade");
+        m_messages.append(msg);
+    }
+    QQmlListProperty<Message> messages() {
+        return QQmlListProperty<Message>(this, &m_messages);
+    }
+private:
+
+#if 0
+    static void append_message(QQmlListProperty<Message> *list, Message *msg) {
+        MessageBoard *msgBoard = qobject_cast<MessageBoard*>(list->object);
+        if(msg && msgBoard)
+            msgBoard->m_messages.append(msg);
+    }
+#endif
+
+private:
+    QList<Message *> m_messages;
+};
+
 
 #endif // MESSAGE_H
