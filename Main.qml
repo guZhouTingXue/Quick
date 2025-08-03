@@ -12,7 +12,7 @@ ApplicationWindow {
     }
     Text {
         anchors.fill: parent
-        text: msg.author
+        text: msg.e
     }
 
 }
