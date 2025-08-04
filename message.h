@@ -22,11 +22,11 @@ public:
     Q_INVOKABLE void emitSignal()
     {
         emit newMessagePosted("animal");
+        emit newMessagePosted(100);
     }
-
 signals:
     void newMessagePosted(const QString &subject);
-
+    void newMessagePosted(int i);
 };
 
 class Invokable : public QObject {
