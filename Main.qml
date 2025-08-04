@@ -7,9 +7,7 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("Exposing Attributes of C++ Types to QML")
-    MessageBoard {
-        id: board
-    }
+    required property MessageBoard board
     MouseArea {
         anchors.fill: parent
         onClicked: {
