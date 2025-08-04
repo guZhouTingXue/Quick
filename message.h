@@ -5,44 +5,29 @@
 #include <QQmlListProperty>
 #include <qqmlintegration.h>
 
+#include <QDebug>
 
-class MessageAuthor : public QObject {
+class MessageBoard : public QObject{
     Q_OBJECT
     QML_ELEMENT
-    Q_PROPERTY(QString name READ name CONSTANT)
-    Q_PROPERTY(QString email READ email CONSTANT)
 public:
-    MessageAuthor(QObject *parent = nullptr) : QObject(parent) {}
-    QString name() const {
-        return "mingStudent";
-    }
-    QString email() const {
-        return ":)@qq.com";
-    }
-};
-
-
-class Message : public QObject
-{
-    Q_OBJECT
-    QML_ELEMENT
-    Q_PROPERTY(MessageAuthor *author READ author CONSTANT)
-public:
-    explicit Message(QObject *parent = nullptr)
+    MessageBoard(QObject *parent = nullptr)
         : QObject(parent)
-        , m_author(new MessageAuthor(this))
     {
-
     }
 
-    MessageAuthor* author() const {
-        return m_author;
+    Q_INVOKABLE QString postMessage(const QString &msg)
+    {
+        qDebug() << "Called the C++ method with" << msg;
+        return "hello QML";
     }
 
-private:
-    MessageAuthor *m_author = nullptr;
+public slots:
+    void refresh()
+    {
+        qDebug() << "Called the C++ slot";
+    }
+
 };
-
-
 
 #endif // MESSAGE_H
