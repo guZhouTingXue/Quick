@@ -11,9 +11,8 @@ ApplicationWindow {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            var result = board.postMessage("Hello from QML")
-            console.log("Result of postMessage():", result);
-            board.refresh();
+            board.refresh()
+            board.refresh("Hello from QML")
         }
     }
 

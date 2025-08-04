@@ -27,6 +27,10 @@ public slots:
     {
         qDebug() << "Called the C++ slot";
     }
+    void refresh(const QString &s)
+    {
+        qDebug() << "Called the refresh(QString):" << s;
+    }
 
 };
 
