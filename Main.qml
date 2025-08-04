@@ -9,23 +9,11 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("Exposing Attributes of C++ Types to QML")
-    required property MessageBoard board
 
-    Invokable {
-        objectName: "parent"
-        property Invokable child: Invokable {}
+    MessageBoard {
+        onNewMessagePosted: (subject)=> console.log("New message received:", subject);
         Component.onCompleted: {
-            child.objectName = "child"
-            // not pragma NativeMethod... output: child;
-            // pragma NativeMethod... output parent
-            child.invoke.call(this)
-        }
-    }
-    //id 和 objectName 不是一个东西; objectName 默认为空""
-    Text {
-        id: txt
-        Component.onCompleted: {
-            console.debug("id:txt, objectName: ", txt.objectName)
+            this.emitSignal()
         }
     }
 

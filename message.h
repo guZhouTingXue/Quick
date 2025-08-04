@@ -14,23 +14,19 @@ public:
     MessageBoard(QObject *parent = nullptr)
         : QObject(parent)
     {
+        qDebug() << __func__;
+        //not useful
+        //emit newMessagePosted("animal");
+    }
+public:
+    Q_INVOKABLE void emitSignal()
+    {
+        emit newMessagePosted("animal");
     }
 
-    Q_INVOKABLE QString postMessage(const QString &msg)
-    {
-        qDebug() << "Called the C++ method with" << msg;
-        return "hello QML";
-    }
+signals:
+    void newMessagePosted(const QString &subject);
 
-public slots:
-    void refresh()
-    {
-        qDebug() << "Called the C++ slot";
-    }
-    void refresh(const QString &s)
-    {
-        qDebug() << "Called the refresh(QString):" << s;
-    }
 };
 
 class Invokable : public QObject {

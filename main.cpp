@@ -8,8 +8,6 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-    MessageBoard board;
-    engine.setInitialProperties({ {"board", QVariant::fromValue(&board)} });
 
     QObject::connect(
         &engine,
