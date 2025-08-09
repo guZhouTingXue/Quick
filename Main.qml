@@ -3,35 +3,51 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 ApplicationWindow {
+    id: root
+    width: 300
+    height: 300
     visible: true
-    width: 600
-    height: 400
-    title: qsTr("Hello QQuick")
 
     RowLayout {
         anchors.fill: parent
-
-        Rectangle {
-            Layout.preferredWidth: 100
-            Layout.preferredHeight: 100
-            id: item
-            color: "blue"
+        ColumnLayout {
             Rectangle {
-                color: "green"
-                width: 50
-                height: 50
-                anchors.bottom: item.bottom
-                anchors.right: item.right
+                color: "tomato";
+                Layout.fillWidth: true
+                Layout.fillHeight: true
             }
-
+            RowLayout {
+                Rectangle {
+                    color: "navajowhite"
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                }
+                Rectangle {
+                    color: "darkseagreen"
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                }
+            }
+            Component.onCompleted: { console.debug( "Column0" + " " + implicitWidth)}
         }
-        Rectangle {
-            color: "plum"
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+        ColumnLayout {
+            Rectangle {
+                color: "lightpink"
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+            }
+            Rectangle {
+                color: "slategray"
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+            }
+            Rectangle {
+                color: "lightskyblue"
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+            }
+            Component.onCompleted: { console.debug( "Column1" + " " + implicitWidth)}
         }
-
     }
-
-
 }
+
