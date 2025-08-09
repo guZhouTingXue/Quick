@@ -2,57 +2,31 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-//1. 两个ColumnLayout 的implicitWidth 都是0
-//2. 两个ColumnLayout 的preferredWidth 相同
 ApplicationWindow {
-    id: root
-    width: 300
-    height: 300
     visible: true
+    width: 400
+    height: 400
+    title: qsTr("Hello QQuick")
 
     RowLayout {
         anchors.fill: parent
-        ColumnLayout {
-            Layout.preferredWidth: 50 //2
-            Rectangle {
-                color: "tomato";
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-            }
-            RowLayout {
-                //spacing: 0 //1
-                Rectangle {
-                    color: "navajowhite"
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                }
-                Rectangle {
-                    color: "darkseagreen"
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                }
-            }
-            Component.onCompleted: { console.debug( "Column0" + " " + implicitWidth)}
+        Rectangle {
+            id: rect
+            color: "green"
+
+            width: 200
+            height: width
+            onWidthChanged: console.debug("(" + width + "," + height + ")")
+            onHeightChanged: console.debug("(" + width + "," + height + ")")
         }
-        ColumnLayout {
-            Layout.preferredWidth: 50 //2
-            Rectangle {
-                color: "lightpink"
-                Layout.fillWidth: true
-                Layout.fillHeight: true
+        Button {
+            text: "subtract Rect width"
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            onClicked: {
+                rect.width -= 50
             }
-            Rectangle {
-                color: "slategray"
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-            }
-            Rectangle {
-                color: "lightskyblue"
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-            }
-            Component.onCompleted: { console.debug( "Column1" + " " + implicitWidth)}
+            background: Rectangle { color: "plum"; anchors.fill: parent }
         }
     }
 }
-
