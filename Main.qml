@@ -8,23 +8,30 @@ ApplicationWindow {
     height: 400
     title: qsTr("Hello QQuick")
 
-RowLayout {
-    anchors.fill: parent
     RowLayout {
         anchors.fill: parent
+
         Rectangle {
-            color: "green"
+            Layout.preferredWidth: 100
             Layout.preferredHeight: 100
-            Layout.preferredWidth: 150
+            id: item
+            color: "blue"
+            Rectangle {
+                color: "green"
+                width: 50
+                height: 50
+                anchors.bottom: item.bottom
+                anchors.right: item.right
+            }
+
         }
         Rectangle {
             color: "plum"
             Layout.fillWidth: true
             Layout.fillHeight: true
         }
-    }
-}
 
+    }
 
 
 }
