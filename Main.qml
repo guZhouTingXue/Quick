@@ -8,6 +8,8 @@ ApplicationWindow {
     height: 400
     title: qsTr("Hello QQuick")
 
+RowLayout {
+    anchors.fill: parent
     RowLayout {
         anchors.fill: parent
         Rectangle {
@@ -21,14 +23,8 @@ ApplicationWindow {
             Layout.fillHeight: true
         }
     }
-    onWidthChanged: {
-        console.debug(`(${width}, ${height})`);
-    }
-    onHeightChanged: {
-        console.debug(`(${width}, ${height})`);
-    }
-    Component.onCompleted: {
-        console.debug(width + " " + height)
-    }
+}
+
+
 
 }
