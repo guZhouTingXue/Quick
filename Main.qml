@@ -9,24 +9,39 @@ ApplicationWindow {
     title: qsTr("Hello QQuick")
 
     RowLayout {
+        id: layout
         anchors.fill: parent
+        spacing: 6
         Rectangle {
-            id: rect
-            color: "green"
-
-            width: 200
-            height: width
-            onWidthChanged: console.debug("(" + width + "," + height + ")")
-            onHeightChanged: console.debug("(" + width + "," + height + ")")
-        }
-        Button {
-            text: "subtract Rect width"
+            color: 'orange'
             Layout.fillWidth: true
-            Layout.fillHeight: true
-            onClicked: {
-                rect.width -= 50
+            Layout.minimumWidth: 50
+            Layout.preferredWidth: 100
+            Layout.maximumWidth: 300
+            Layout.minimumHeight: 150
+            Text {
+                anchors.centerIn: parent
+                text: parent.width + 'x' + parent.height
             }
-            background: Rectangle { color: "plum"; anchors.fill: parent }
+            Component.onCompleted: console.debug('orange' + width)
+            onWidthChanged: console.debug("orange width:" + width)
+
         }
+        Rectangle {
+            color: 'plum'
+            Layout.fillWidth: true
+            Layout.minimumWidth: 100
+            Layout.preferredWidth: 200
+            Layout.preferredHeight: 100
+            Text {
+                anchors.centerIn: parent
+                text: parent.width + 'x' + parent.height
+            }
+            Component.onCompleted: console.debug('plum' + width)
+            onWidthChanged: console.debug("plum width:" + width)
+        }
+        onWidthChanged: console.debug("layout width:" + width)
+
     }
+    onWidthChanged: console.debug("window width:" + width)
 }
