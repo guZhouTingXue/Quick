@@ -4,9 +4,16 @@ import QtQuick.Layouts
 
 ApplicationWindow {
     visible: true
-    width: 400
-    height: 400
+
     title: qsTr("Hello QQuick")
+    minimumWidth: layout.Layout.minimumWidth
+    minimumHeight: layout.Layout.minimumHeight
+    maximumWidth: 1000
+    maximumHeight: layout.Layout.maximumHeight
+
+    width: layout.implicitWidth
+    height: layout.implicitHeight
+
 
     RowLayout {
         id: layout
@@ -23,9 +30,6 @@ ApplicationWindow {
                 anchors.centerIn: parent
                 text: parent.width + 'x' + parent.height
             }
-            Component.onCompleted: console.debug('orange' + width)
-            onWidthChanged: console.debug("orange width:" + width)
-
         }
         Rectangle {
             color: 'plum'
@@ -37,11 +41,6 @@ ApplicationWindow {
                 anchors.centerIn: parent
                 text: parent.width + 'x' + parent.height
             }
-            Component.onCompleted: console.debug('plum' + width)
-            onWidthChanged: console.debug("plum width:" + width)
         }
-        onWidthChanged: console.debug("layout width:" + width)
-
     }
-    onWidthChanged: console.debug("window width:" + width)
 }
