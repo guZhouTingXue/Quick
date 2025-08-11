@@ -3,44 +3,38 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 ApplicationWindow {
+    id: root
+    width: 300
+    height: 300
     visible: true
+    title: "Spanning and stretching Items"
 
-    title: qsTr("Hello QQuick")
-    minimumWidth: layout.Layout.minimumWidth
-    minimumHeight: layout.Layout.minimumHeight
-    maximumWidth: 1000
-    maximumHeight: layout.Layout.maximumHeight
-
-    width: layout.implicitWidth
-    height: layout.implicitHeight
-
-
-    RowLayout {
-        id: layout
-        anchors.fill: parent
-        spacing: 6
-        Rectangle {
-            color: 'orange'
-            Layout.fillWidth: true
-            Layout.minimumWidth: 50
-            Layout.preferredWidth: 100
-            Layout.maximumWidth: 300
-            Layout.minimumHeight: 150
-            Text {
-                anchors.centerIn: parent
-                text: parent.width + 'x' + parent.height
-            }
-        }
-        Rectangle {
-            color: 'plum'
-            Layout.fillWidth: true
-            Layout.minimumWidth: 100
-            Layout.preferredWidth: 200
-            Layout.preferredHeight: 100
-            Text {
-                anchors.centerIn: parent
-                text: parent.width + 'x' + parent.height
-            }
-        }
+    GridLayout {
+       rows: 2
+       columns: 3
+       anchors.fill: parent
+       Rectangle {
+           color: 'cyan'
+           implicitWidth: 50
+           implicitHeight: 50
+       }
+       Rectangle {
+           color: 'magenta'
+           implicitWidth: 50
+           implicitHeight: 50
+       }
+       Rectangle {
+           color: 'yellow'
+           implicitWidth: 50
+           implicitHeight: 50
+       }
+       Rectangle {
+           color: 'black'
+           implicitWidth: 150
+           implicitHeight: 50
+           Layout.columnSpan: 3
+           Layout.alignment: Qt.AlignHCenter
+       }
     }
 }
+
