@@ -5,7 +5,7 @@ import QtQuick.Layouts
 ApplicationWindow {
     id: root
     width: 300
-    height: 300
+    height: 100
     visible: true
     title: "Spanning and stretching Items"
 
@@ -17,24 +17,20 @@ ApplicationWindow {
            color: 'cyan'
            implicitWidth: 50
            implicitHeight: 50
+           Layout.fillWidth: true
+           Layout.horizontalStretchFactor: 1
+           onWidthChanged: console.debug('cyan width:' + width)
        }
        Rectangle {
            color: 'magenta'
            implicitWidth: 50
            implicitHeight: 50
-       }
-       Rectangle {
-           color: 'yellow'
-           implicitWidth: 50
-           implicitHeight: 50
-       }
-       Rectangle {
-           color: 'black'
-           implicitWidth: 150
-           implicitHeight: 50
-           Layout.columnSpan: 3
-           Layout.alignment: Qt.AlignHCenter
+           Layout.fillWidth: true
+           Layout.horizontalStretchFactor: 2
+           onWidthChanged: console.debug('magenta width:' + width)
        }
     }
+    onWidthChanged: console.debug('window width:' + width)
+
 }
 
