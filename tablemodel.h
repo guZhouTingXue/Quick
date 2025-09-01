@@ -10,16 +10,19 @@ class TableModel : public QAbstractTableModel
     QML_ELEMENT
 
 public:
+    TableModel(QObject *parent = nullptr) : QAbstractTableModel(parent) {
+        ;
+    }
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
     int rowCount(const QModelIndex & = QModelIndex()) const override
     {
-        return 200;
+        return 3;
     }
 
     int columnCount(const QModelIndex & = QModelIndex()) const override
     {
-        return 200;
+        return 2;
     }
 
     QVariant data(const QModelIndex &index, int role) const override
