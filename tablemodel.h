@@ -17,7 +17,7 @@ public:
 
     int rowCount(const QModelIndex & = QModelIndex()) const override
     {
-        return 3;
+        return 10;
     }
 
     int columnCount(const QModelIndex & = QModelIndex()) const override
