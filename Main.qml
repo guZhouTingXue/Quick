@@ -38,7 +38,7 @@ ApplicationWindow {
             delegate: Rectangle {
                 id: rect
                 implicitHeight: 50
-                implicitWidth: 100
+                implicitWidth: label.implicitWidth
                 Label {
                     id: label
                     text: display
@@ -47,28 +47,23 @@ ApplicationWindow {
 
             }
             Component.onCompleted: {
-                number = 0
                 console.info(
-                            "explicit:", explicitColumnWidth(0)
-                            , " implicit:", implicitColumnWidth(0)
-                            , " width:",columnWidth(0)
+                            "comleted row:4 ",
+                            "explicit:", explicitColumnWidth(4)
+                            , " implicit:", implicitColumnWidth(4)
+                            , " width:",columnWidth(4)
                             )
 
             }
+            columnWidthProvider: function(column) {
+                var headerWidth = horizontalHeader.implicitColumnWidth(column)
+                var delegateWidth = implicitColumnWidth(column)
+                console.info( " loaded:", isColumnLoaded(column),
+                             " column:", column, " headerWidth:", headerWidth, " delegateWidth:", delegateWidth)
+                var maxWidth = Math.max(headerWidth, delegateWidth)
+                return maxWidth
+            }
 
-            property int number
-
-            property var columnWidths: [100, 50, 80, 150, 150]
-               columnWidthProvider: function (column) { return columnWidths[column] }
-
-            Timer {
-                 running: true
-                 interval: 5000
-                 onTriggered: {
-                     tableView.columnWidths[2] = 150
-                     tableView.forceLayout();
-                 }
-             }
         }
     }
 }

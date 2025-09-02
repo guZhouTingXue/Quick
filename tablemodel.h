@@ -29,6 +29,9 @@ public:
     {
         switch (role) {
         case Qt::DisplayRole:
+            if(index.column() == 4 )
+                return "";
+
             if(index.row() > 2)
                 return QString("%1, %2").arg(index.column()).arg(index.row())
                 + "When a new column is flicked into view, TableView will determine its width by calling the columnWidthProvider.";
