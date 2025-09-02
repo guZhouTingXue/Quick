@@ -4,12 +4,7 @@ QVariant TableModel::headerData(int section, Qt::Orientation orientation, int ro
 {
     if(orientation == Qt::Horizontal && role == Qt::DisplayRole)
     {
-        if(section == 0)
-            return "name";
-        else if(section == 1)
-            return "color";
-        else
-            return " ";
+        return QString("column %0").arg(section);
     }
     return QVariant();
 }

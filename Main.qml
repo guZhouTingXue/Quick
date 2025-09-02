@@ -6,15 +6,12 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("HeaderView")
-    Column {
-    spacing: 5
-    anchors.fill: parent
 
     Rectangle {
         id: frame
-        width: parent.width
-        height: parent.height - btn.height
-        //anchors.fill: parent
+
+        anchors.fill: parent
+
         color: Application.styleHints.appearance === Qt.Light ? palette.mid : palette.midlight
 
         HorizontalHeaderView {
@@ -40,9 +37,8 @@ ApplicationWindow {
 
             delegate: Rectangle {
                 id: rect
-                implicitWidth: row <= 2 ? 100 : 200
-                //implicitWidth: 100
                 implicitHeight: 50
+                implicitWidth: 100
                 Label {
                     id: label
                     text: display
@@ -51,6 +47,7 @@ ApplicationWindow {
 
             }
             Component.onCompleted: {
+                number = 0
                 console.info(
                             "explicit:", explicitColumnWidth(0)
                             , " implicit:", implicitColumnWidth(0)
@@ -58,15 +55,24 @@ ApplicationWindow {
                             )
 
             }
+
+            property int number
+
+            columnWidthProvider: function(column) {
+                number++
+                //, " number:", number)
+                console.info("provider column:", column,
+                             " loaded:", isColumnLoaded(column),
+                             " width:", columnWidth(column),
+                             " explicit:", explicitColumnWidth(column)
+                             , " implicit:", implicitColumnWidth(column)
+                             , " width:",columnWidth(column)
+                             )
+                if(column === 1)
+                    return 0;
+                else
+                    return -1;
+            }
         }
-    }
-    Button {
-        id: btn
-        width: 100; height: 50;
-        text: "addRow"
-        onClicked: {
-            tableView.model.appendRow();
-        }
-    }
     }
 }
