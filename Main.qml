@@ -58,21 +58,17 @@ ApplicationWindow {
 
             property int number
 
-            columnWidthProvider: function(column) {
-                number++
-                //, " number:", number)
-                console.info("provider column:", column,
-                             " loaded:", isColumnLoaded(column),
-                             " width:", columnWidth(column),
-                             " explicit:", explicitColumnWidth(column)
-                             , " implicit:", implicitColumnWidth(column)
-                             , " width:",columnWidth(column)
-                             )
-                if(column === 1)
-                    return 0;
-                else
-                    return -1;
-            }
+            property var columnWidths: [100, 50, 80, 150, 150]
+               columnWidthProvider: function (column) { return columnWidths[column] }
+
+            Timer {
+                 running: true
+                 interval: 5000
+                 onTriggered: {
+                     tableView.columnWidths[2] = 150
+                     tableView.forceLayout();
+                 }
+             }
         }
     }
 }
