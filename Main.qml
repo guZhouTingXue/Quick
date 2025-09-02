@@ -62,6 +62,19 @@ ApplicationWindow {
                     text: display
                 }
                 onSelectedChanged: console.info("delegate selected:", selected, "row: ", row, " column:", column)
+                //对 mouse 进行处理，点击相关的事件不会向上传播，没有效果。
+                // MouseArea {
+                //     onClicked: (mouse) => {
+                //                mouse.accepted = true
+                //                }
+                //     onDoubleClicked: (mouse) => {
+                //                mouse.accepted = true
+                //                }
+                //     onPressed:(mouse) => {
+                //                   mouse.accepted = true
+                //                   }
+
+                // }
             }
         }
     }
