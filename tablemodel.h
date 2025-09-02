@@ -17,19 +17,23 @@ public:
 
     int rowCount(const QModelIndex & = QModelIndex()) const override
     {
-        return 10;
+        return m_row;
     }
 
     int columnCount(const QModelIndex & = QModelIndex()) const override
     {
-        return 2;
+        return 5;
     }
 
     QVariant data(const QModelIndex &index, int role) const override
     {
         switch (role) {
         case Qt::DisplayRole:
-            return QString("%1, %2").arg(index.column()).arg(index.row());
+            if(index.row() > 2)
+                return QString("%1, %2").arg(index.column()).arg(index.row())
+                + "When a new column is flicked into view, TableView will determine its width by calling the columnWidthProvider.";
+            else
+                return QString("%1, %2").arg(index.column()).arg(index.row());
         default:
             break;
         }
@@ -41,6 +45,15 @@ public:
     {
         return { {Qt::DisplayRole, "display"} };
     }
+
+public slots:
+    void appendRow() {
+        beginInsertRows(QModelIndex(), m_row, m_row);
+        m_row++;
+        endInsertRows();
+    }
+private:
+    size_t m_row = 2;
 };
 
 #endif // TABLEMODEL_H

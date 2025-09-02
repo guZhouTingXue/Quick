@@ -8,6 +8,8 @@ QVariant TableModel::headerData(int section, Qt::Orientation orientation, int ro
             return "name";
         else if(section == 1)
             return "color";
+        else
+            return " ";
     }
     return QVariant();
 }

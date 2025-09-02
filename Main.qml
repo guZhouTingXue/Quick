@@ -6,16 +6,21 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("HeaderView")
+    Column {
+    spacing: 5
+    anchors.fill: parent
 
     Rectangle {
-        anchors.fill: parent
+        id: frame
+        width: parent.width
+        height: parent.height - btn.height
+        //anchors.fill: parent
         color: Application.styleHints.appearance === Qt.Light ? palette.mid : palette.midlight
 
         HorizontalHeaderView {
             id: horizontalHeader
             anchors.top: parent.top
             anchors.left: parent.left
-
             syncView: tableView
         }
 
@@ -26,25 +31,7 @@ ApplicationWindow {
             anchors.top: horizontalHeader.bottom
             anchors.bottom: parent.bottom
             clip: true
-            //interactive: false
 
-            selectionModel: ItemSelectionModel{
-                id: selection
-                model: tableView.model
-                onSelectionChanged: function(selected, deselected){
-                           console.debug("selectionChanged selected:", selected);
-                       }
-                }
-            selectionBehavior: TableView.SelectRows
-            //selectionMode: TableView.SingleSelection;
-            onCurrentRowChanged: function(){
-                console.info("currentRow:", currentRow)
-                let currentIndex = model.index(currentRow, currentColumn)
-                selection.select(currentIndex,
-                                 ItemSelectionModel.ClearAndSelect
-                                 | ItemSelectionModel.Rows
-                                 );
-            }
             ScrollBar.vertical: ScrollBar {}
 
             columnSpacing: 1
@@ -53,29 +40,33 @@ ApplicationWindow {
 
             delegate: Rectangle {
                 id: rect
-                implicitWidth: 100
+                implicitWidth: row <= 2 ? 100 : 200
+                //implicitWidth: 100
                 implicitHeight: 50
-                required property bool selected
-                required property bool current
-                color: selected ? "red" : "blue"
                 Label {
+                    id: label
                     text: display
-                }
-                onSelectedChanged: console.info("delegate selected:", selected, "row: ", row, " column:", column)
-                //对 mouse 进行处理，点击相关的事件不会向上传播，没有效果。
-                // MouseArea {
-                //     onClicked: (mouse) => {
-                //                mouse.accepted = true
-                //                }
-                //     onDoubleClicked: (mouse) => {
-                //                mouse.accepted = true
-                //                }
-                //     onPressed:(mouse) => {
-                //                   mouse.accepted = true
-                //                   }
 
-                // }
+                }
+
+            }
+            Component.onCompleted: {
+                console.info(
+                            "explicit:", explicitColumnWidth(0)
+                            , " implicit:", implicitColumnWidth(0)
+                            , " width:",columnWidth(0)
+                            )
+
             }
         }
+    }
+    Button {
+        id: btn
+        width: 100; height: 50;
+        text: "addRow"
+        onClicked: {
+            tableView.model.appendRow();
+        }
+    }
     }
 }
